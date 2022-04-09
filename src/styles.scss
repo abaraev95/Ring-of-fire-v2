@@ -17,3 +17,26 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
         display: none !important;
     }
 }
+
+.profile-picture {
+    width: 60px;
+    height: 60px;
+    border-radius: 100%;
+    cursor: pointer;
+
+    &:hover {
+        filter: brightness(1.15);
+    }
+}
+
+.mat-dialog-actions {
+    justify-content: space-between;
+}
+
+.mat-form-field {
+    width: 100%;
+}
+
+.highlight {
+    border: 2px solid blue;
+}

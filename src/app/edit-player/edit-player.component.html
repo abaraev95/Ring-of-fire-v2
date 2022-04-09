@@ -1,8 +1,16 @@
 <h1 mat-dialog-title>Edit Player</h1>
+<div mat-dialog-content>
+  <p>You can change your name or pick a different profile picture</p>
+  <mat-form-field appearance="fill">
+    <mat-label>Name</mat-label>
+    <input matInput [(ngModel)]="data.name">
+  </mat-form-field>
+</div>
 
-<img [mat-dialog-close]="picture" class="profile-picture" *ngFor="let picture of allProfilePictures" src="./assets/img/profile/{{ picture }}">
+<img [class.highlight]="picture == highlight" (click)="highlightPicture(picture); data.picture = picture" class="profile-picture" *ngFor="let picture of allProfilePictures" src="./assets/img/profile/{{ picture }}">
 
 <div mat-dialog-actions>
     <button mat-button (click)="dialogRef.close()">Close</button>
     <button mat-button [mat-dialog-close]="'DELETE'" color="warn">Delete player</button>
+    <button mat-button [mat-dialog-close]="data" [disabled]="data.name.length == 0 && data.picture.length == 0">Ok</button>
   </div>

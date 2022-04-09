@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { Game } from 'src/app/models/game';
 import { AddPlayerDialogComponent } from '../add-player-dialog/add-player-dialog.component';
 import { AngularFirestore } from '@angular/fire/compat/firestore';
@@ -17,6 +17,8 @@ export class GameComponent implements OnInit {
   game!: Game;
   gameId!: string;
   gameOver = false;
+  name: string = '';
+  picture: string = '';
 
   constructor(private route: ActivatedRoute, private firestore: AngularFirestore, public dialog: MatDialog) { }
 
@@ -65,19 +67,25 @@ export class GameComponent implements OnInit {
     }
   }
 
-
+// Edit one of the players
   editPlayer(playerID: number) {
-    console.log('Edit Player', playerID);
 
-    const dialogRef = this.dialog.open(EditPlayerComponent);
+    const dialogRef = this.dialog.open(EditPlayerComponent, {
+      data: {name: this.name, picture: this.picture}
+    });
 
-    dialogRef.afterClosed().subscribe((change: string) => {
-      if (change) {
-        if (change == 'DELETE') {
+    dialogRef.afterClosed().subscribe((data) => {
+      if (data) {
+        if (data == 'DELETE') {
           this.game.players.splice(playerID, 1);
           this.game.player_images.splice(playerID, 1);
         } else {
-          this.game.player_images[playerID] = change;
+          if (data.name){
+            this.game.players[playerID] = data.name;
+          }
+          if (data.picture){
+            this.game.player_images[playerID] = data.picture;
+          }
         }
         this.saveGame();
       }
@@ -86,12 +94,14 @@ export class GameComponent implements OnInit {
   }
 
   openDialog(): void {
-    const dialogRef = this.dialog.open(AddPlayerDialogComponent);
+    const dialogRef = this.dialog.open(AddPlayerDialogComponent, {
+      data: {name: this.name, picture: this.picture}
+    });
 
-    dialogRef.afterClosed().subscribe(name => {
-      if (name) {
-        this.game.players.push(name);
-        this.game.player_images.push('1.webp');
+    dialogRef.afterClosed().subscribe((data) => {
+      if (data.name && data.picture) {
+        this.game.players.push(data.name);
+        this.game.player_images.push(data.picture);
         this.saveGame();
       }
     });

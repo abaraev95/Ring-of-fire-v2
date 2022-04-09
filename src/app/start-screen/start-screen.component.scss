@@ -1,0 +1,41 @@
+.startScreen {
+    height: 100vh;
+    width: 100vw;
+    max-width: 100%;
+    background-color: #404040;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @media (max-width: 960px){
+        overflow: hidden;
+    }
+
+    img {
+        height: 100vh;
+    }
+}
+
+.startLabel {
+    position: absolute;
+    bottom: 32px;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    img {
+        height: auto;
+        width: 40vw;
+
+        @media (max-width: 960px){
+            width: 400px;
+        }
+
+        &:hover {
+            cursor: pointer;
+            filter: brightness(1.2);
+        }
+    }
+}

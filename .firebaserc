@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "ring-of-fire-d5e9d": {
+      "hosting": {
+        "RingOfFire-v2": [
+          "ring-of-fire-d5e9d"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "ring-of-fire-d5e9d"
+  }
+}
